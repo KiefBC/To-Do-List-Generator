@@ -53,3 +53,38 @@ def add_task():
             database.session.commit()
             print("The task has been added!\n")
             break
+
+
+def missed_tasks():
+    tasks = database.session.query(database.ToDo).filter(database.ToDo.deadline < datetime.today().date()).all()
+    print(NEW_LINE)
+    if len(tasks) == 0:
+        print("Missed tasks:\nAll tasks have been completed!")
+    for i, row in enumerate(tasks):
+        print(f"{i + 1}. {row.task}. {row.deadline:%d} {row.deadline:%b}")
+    print(NEW_LINE)
+
+
+def delete_task():
+    print(NEW_LINE)
+    current_tasks = database.session.query(database.ToDo).order_by(database.ToDo.deadline).all()
+    if len(current_tasks) == 0:
+        print("Nothing to delete")
+        return
+    print("Choose the number of the task you want to delete:")
+    for i, row in enumerate(current_tasks):
+        print(f"{i + 1}. {row.task}. {row.deadline:%d} {row.deadline:%b}")
+    while True:
+        try:
+            task_to_delete = int(input())
+        except ValueError:
+            print("Invalid input!")
+        else:
+            if 0 < task_to_delete <= len(current_tasks):
+                database.session.delete(current_tasks[task_to_delete - 1])
+                database.session.commit()
+                print("The task has been deleted!")
+                break
+            else:
+                print("Invalid input!")
+    print(NEW_LINE)
