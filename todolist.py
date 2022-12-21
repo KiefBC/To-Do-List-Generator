@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import database
 
-TASK_MENU = """1. Today's tasks\n2. Week's tasks\n3. All tasks\n4. Add a task\n0. Exit"""
+TASK_MENU = """1) Today's tasks\n2) Week's tasks\n3) All tasks\n4) Add a task\n0) Exit"""
 
 
 def main():
