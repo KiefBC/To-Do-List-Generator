@@ -17,24 +17,6 @@ class ToDo(Base):
     task = Column(VARCHAR, default='Unemployed')
     deadline = Column(DATE, default=dt.datetime.today())
 
-    def add_task(self, task):
-        """
-        Adds a task to the database
-        :param task: string
-        :return:
-        """
-        new_task = ToDo(task=task)
-        session.add(new_task)
-        session.commit()
-        return "The task has been added!"
-
-    def query_db(self):
-        """
-        :return: list of tasks
-        :return:
-        """
-        return session.query(ToDo).all()
-
     def initialize(self):
         """
         Creates a database if it doesn't exist
